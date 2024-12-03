@@ -34,7 +34,6 @@ public class Book {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisher_id", nullable = false)
     @Getter
-    @Setter
     private Publisher publisher;
 
     @Getter
