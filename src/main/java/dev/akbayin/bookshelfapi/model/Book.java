@@ -1,5 +1,7 @@
 package dev.akbayin.bookshelfapi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.akbayin.bookshelfapi.converter.PublisherReferenceConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +31,24 @@ public class Book {
     @Setter
     private Set<Author> authors = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisher_id", nullable = false)
     @Getter
     @Setter
     private Publisher publisher;
 
+    @Getter
+    @Setter
+    @Column(name = "publishing_year")
+    private int publishingYear;
+
+    @Enumerated(EnumType.STRING)
+    @Getter
+    @Setter
+    private Status status;
+
+    @JsonDeserialize(converter = PublisherReferenceConverter.class)
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
 }
