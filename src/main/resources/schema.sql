@@ -2,7 +2,8 @@ CREATE SCHEMA IF NOT EXISTS book_shelf;
 
 CREATE TABLE IF NOT EXISTS `book_shelf`.`authors` (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(150) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
