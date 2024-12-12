@@ -27,6 +27,7 @@ public class Book {
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+
     @Getter
     @Setter
     private Set<Author> authors = new HashSet<>();
@@ -34,6 +35,7 @@ public class Book {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisher_id", nullable = false)
     @Getter
+    @Setter
     private Publisher publisher;
 
     @Getter
@@ -45,9 +47,4 @@ public class Book {
     @Getter
     @Setter
     private Status status;
-
-    @JsonDeserialize(converter = PublisherReferenceConverter.class)
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
 }

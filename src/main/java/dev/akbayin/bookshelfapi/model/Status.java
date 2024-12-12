@@ -1,8 +1,8 @@
 package dev.akbayin.bookshelfapi.model;
 
 public enum Status {
-    READ,
-    WANT_TO_READ,
-    READING,
-    NOT_READ
+    read,
+    want_to_read,
+    reading,
+    not_read
 }
