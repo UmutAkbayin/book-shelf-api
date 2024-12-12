@@ -1,7 +1,5 @@
 package dev.akbayin.bookshelfapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import dev.akbayin.bookshelfapi.converter.PublisherReferenceConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
