@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "publishers")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Publisher {
 
     @Id
