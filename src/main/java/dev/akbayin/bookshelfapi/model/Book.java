@@ -19,13 +19,12 @@ public class Book {
     @Setter
     private String title;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "book_authors",
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-
     @Getter
     @Setter
     private Set<Author> authors = new HashSet<>();
@@ -41,6 +40,7 @@ public class Book {
     @Column(name = "publishing_year")
     private int publishingYear;
 
+    @Column(columnDefinition = "ENUM('READ', 'WANT_TO_READ', 'READING', 'NOT_READ')")
     @Enumerated(EnumType.STRING)
     @Getter
     @Setter

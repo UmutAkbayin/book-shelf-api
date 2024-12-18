@@ -1,8 +1,12 @@
 package dev.akbayin.bookshelfapi.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Status {
-    read,
-    want_to_read,
-    reading,
-    not_read
+    READ,
+    WANT_TO_READ,
+    READING,
+    NOT_READ
+
 }

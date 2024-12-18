@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `book_shelf`.`books` (
     title VARCHAR(200) NOT NULL,
     publisher_id INT NOT NULL,
     publishing_year YEAR NOT NULL CHECK (publishing_year >= 1450),
-    status ENUM('read', 'want to read', 'reading', 'not read') NOT NULL DEFAULT 'not read',
+    status ENUM('READ', 'WANT_TO_READ', 'READING', 'NOT_READ') NOT NULL DEFAULT 'NOT_READ',
     PRIMARY KEY (id),
     FOREIGN KEY (publisher_id) REFERENCES book_shelf.publishers(id) ON DELETE CASCADE
 );
