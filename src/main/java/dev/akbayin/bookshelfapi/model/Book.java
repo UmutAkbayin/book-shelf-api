@@ -1,6 +1,7 @@
 package dev.akbayin.bookshelfapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisher_id", nullable = false)
+    @NotNull
     @Getter
     @Setter
     private Publisher publisher;
