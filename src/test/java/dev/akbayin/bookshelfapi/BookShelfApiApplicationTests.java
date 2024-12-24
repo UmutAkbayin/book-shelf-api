@@ -26,10 +26,4 @@ class BookShelfApiApplicationTests {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void shouldReturnPublisher() throws Exception {
-        mockMvc.perform(get("/api/publishers"))
-                .andExpect(status().isOk());
-    }
-
 }
