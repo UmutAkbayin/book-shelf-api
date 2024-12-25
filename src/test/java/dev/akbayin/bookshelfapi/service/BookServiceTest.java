@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,41 +33,33 @@ public class BookServiceTest {
     @Test
     @DisplayName("Create a new Book that does not exist")
     public void testCreateBook() {
+        // Arrange
         BookDto bookDto = new BookDto();
-        Publisher publisher = new Publisher("Manning");
-        Author author = new Author();
-        author.setFirstName("Laurentiu");
-        author.setLastName("Spilca");
-        Set<Author> authors = new HashSet<>();
-        authors.add(author);
-        bookDto.setAuthors(authors);
-        bookDto.setPublisher(publisher);
         bookDto.setTitle("Spring Security in Action");
         bookDto.setPublishingYear(2024);
         bookDto.setStatus(Status.NOT_READ);
+        bookDto.setPublisher(new Publisher("Manning"));
+        bookDto.setAuthors(Set.of(new Author("Laurentiu", "Spilca")));
 
         Book book = new Book();
-        Publisher otherPublisher = new Publisher("Manning");
-        Author otherAuthor = new Author();
-        otherAuthor.setFirstName("Laurentiu");
-        otherAuthor.setLastName("Spilca");
-        Set<Author> otherAuthors = new HashSet<>();
-        otherAuthors.add(otherAuthor);
-        book.setAuthors(otherAuthors);
-        book.setPublisher(otherPublisher);
         book.setTitle("Spring Security in Action");
         book.setPublishingYear(2024);
         book.setStatus(Status.NOT_READ);
+        book.setPublisher(new Publisher("Manning"));
+        book.setAuthors(Set.of(new Author("Laurentiu", "Spilca")));
 
         when(bookRepository.save(any(Book.class))).thenReturn(book);
 
+        // Act
+        Optional<Book> savedBook = bookService.createBook(bookDto);
 
-
-        bookService.createBook(bookDto).ifPresent((savedBook) -> {
-            assertNotNull(savedBook);
-            assertEquals("Spring Security in Action", savedBook.getTitle());
-            assertTrue(savedBook.getAuthors().contains(otherAuthor));
-        });
+        // Assert
+        assertTrue(savedBook.isPresent());
+        assertEquals("Spring Security in Action", savedBook.get().getTitle());
+        assertEquals("Manning", savedBook.get().getPublisher().getName());
+        assertTrue(savedBook.get().getAuthors().stream()
+                .anyMatch(author -> author.getFirstName().equals("Laurentiu")
+                        && author.getLastName().equals("Spilca")));
         verify(bookRepository, times(1)).save(any(Book.class));
     }
 }
