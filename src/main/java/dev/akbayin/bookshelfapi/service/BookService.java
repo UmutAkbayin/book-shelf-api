@@ -17,6 +17,17 @@ public class BookService {
     }
 
     public Optional<Book> createBook(BookDto bookDto) {
-        throw new UnsupportedOperationException();
+        Optional<Book> existingBook = bookRepository.findByTitle(bookDto.getTitle());
+        if (existingBook.isPresent()) {
+            throw new IllegalArgumentException("A book with the same title already exists.");
+        }
+        Book newBook = new Book();
+        newBook.setTitle(bookDto.getTitle());
+        newBook.setStatus(bookDto.getStatus());
+        newBook.setPublishingYear(bookDto.getPublishingYear());
+        newBook.setAuthors(bookDto.getAuthors());
+        newBook.setPublisher(bookDto.getPublisher());
+
+        return Optional.of(bookRepository.save(newBook));
     }
 }
