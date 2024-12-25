@@ -17,7 +17,9 @@ public class BookService {
     }
 
     public Optional<Book> createBook(BookDto bookDto) {
-        Optional<Book> existingBook = bookRepository.findByTitle(bookDto.getTitle());
+        Optional<Book> existingBook = bookRepository.findByTitleAndPublisherName(
+                bookDto.getTitle(), bookDto.getPublisher().getName()
+        );
         if (existingBook.isPresent()) {
             throw new IllegalArgumentException("A book with the same title already exists.");
         }
