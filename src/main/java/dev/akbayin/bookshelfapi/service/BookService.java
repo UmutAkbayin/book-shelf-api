@@ -1,6 +1,7 @@
 package dev.akbayin.bookshelfapi.service;
 
 import dev.akbayin.bookshelfapi.dto.BookDto;
+import dev.akbayin.bookshelfapi.exception.DuplicateBookException;
 import dev.akbayin.bookshelfapi.model.Book;
 import dev.akbayin.bookshelfapi.repository.BookRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class BookService {
                 bookDto.getTitle(), bookDto.getPublisher().getName()
         );
         if (existingBook.isPresent()) {
-            throw new IllegalArgumentException("A book with the same title already exists.");
+            throw new DuplicateBookException();
         }
         Book newBook = new Book();
         newBook.setTitle(bookDto.getTitle());
