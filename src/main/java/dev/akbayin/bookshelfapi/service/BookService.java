@@ -32,7 +32,7 @@ public class BookService {
         try {
             return bookRepository.save(newBook);
         } catch (DataIntegrityViolationException e) {
-            throw new DuplicateBookException();
+            throw new DuplicateBookException("Book with the title already exists.");
         } catch (OptimisticLockingFailureException ex) {
             throw new BookVersionMismatchException("The book version is outdated or entity does not exist.");
         } catch (IllegalArgumentException e) {

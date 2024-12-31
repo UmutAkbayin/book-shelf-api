@@ -8,16 +8,16 @@ import java.util.Map;
 @Data
 public class ErrorResponse {
     private final String message;
-    private final Map<String, String> errors;
+    private String errorCode;
     private final LocalDateTime timestamp;
 
     public ErrorResponse(String message) {
         this(message, null);
     }
 
-    public ErrorResponse(String message, Map<String, String> errors) {
+    public ErrorResponse(String message, String errorCode) {
         this.message = message;
-        this.errors = errors;
+        this.errorCode = errorCode;
         this.timestamp = LocalDateTime.now();
     }
 }
