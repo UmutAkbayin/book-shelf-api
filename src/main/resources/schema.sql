@@ -1,5 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS book_shelf;
 
+USE book_shelf;
+
 CREATE TABLE IF NOT EXISTS `book_shelf`.`authors` (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
@@ -15,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `book_shelf`.`publishers` (
 
 CREATE TABLE IF NOT EXISTS `book_shelf`.`books` (
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(200) NOT NULL,
+    title VARCHAR(200) NOT NULL UNIQUE,
     publisher_id INT NOT NULL,
     publishing_year YEAR NOT NULL CHECK (publishing_year >= 1450),
     status ENUM('READ', 'WANT_TO_READ', 'READING', 'NOT_READ') NOT NULL DEFAULT 'NOT_READ',

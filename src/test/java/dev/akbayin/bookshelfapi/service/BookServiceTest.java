@@ -1,6 +1,7 @@
 package dev.akbayin.bookshelfapi.service;
 
 import dev.akbayin.bookshelfapi.dto.BookDto;
+import dev.akbayin.bookshelfapi.exception.DuplicateBookException;
 import dev.akbayin.bookshelfapi.model.Author;
 import dev.akbayin.bookshelfapi.model.Book;
 import dev.akbayin.bookshelfapi.model.Publisher;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 import java.util.Set;
@@ -56,28 +58,27 @@ public class BookServiceTest {
 
         when(bookRepository.save(any(Book.class))).thenReturn(book);
 
-        Optional<Book> savedBook = bookService.createBook(bookDto);
+        Book savedBook = bookService.createBook(bookDto);
 
-        assertTrue(savedBook.isPresent());
-        assertEquals("Spring Security in Action", savedBook.get().getTitle());
-        assertEquals("Manning", savedBook.get().getPublisher().getName());
-        assertTrue(savedBook.get().getAuthors().stream()
+        assertEquals("Spring Security in Action", savedBook.getTitle());
+        assertEquals("Manning", savedBook.getPublisher().getName());
+        assertTrue(savedBook.getAuthors().stream()
                 .anyMatch(author -> author.getFirstName().equals("Laurentiu")
                         && author.getLastName().equals("Spilca")));
         verify(bookRepository, times(1)).save(any(Book.class));
     }
 
     @Test
-    @DisplayName("Throw IllegalArgumentException when a book with the same title and publisher name exists")
+    @DisplayName("Throw DuplicateBookException when a book with the same title and publisher name exists")
     void testCreateDuplicateBookByPublisherName() {
         // Arrange
-        when(bookRepository.findByTitleAndPublisherName(bookDto.getTitle(), bookDto.getPublisher().getName()))
-                .thenReturn(Optional.of(book));
+        when(bookRepository.save(any(Book.class)))
+                .thenThrow(new DataIntegrityViolationException("Duplicate entry"));
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> bookService.createBook(bookDto));
+        assertThrows(DuplicateBookException.class, () -> bookService.createBook(bookDto));
 
         // Verify
-        verify(bookRepository, never()).save(any(Book.class));
+        verify(bookRepository, times(1)).save(any(Book.class));
     }
 }

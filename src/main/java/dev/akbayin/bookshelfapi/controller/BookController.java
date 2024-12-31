@@ -23,15 +23,11 @@ public class BookController {
 
     @PostMapping("books")
     ResponseEntity<Book> createBook(@RequestBody BookDto bookDto, UriComponentsBuilder ucb) {
-        Optional<Book> bookOptional = bookService.createBook(bookDto);
-        if (bookOptional.isPresent()) {
-            Book savedBook = bookOptional.get();
-            URI locationOfNewBook = ucb
-                    .path("/api/books/{id}")
-                    .buildAndExpand(savedBook.getId())
-                    .toUri();
-            return ResponseEntity.created(locationOfNewBook).build();
-        }
-        return ResponseEntity.badRequest().build();
+        Book savedBook = bookService.createBook(bookDto);
+        URI locationOfNewBook = ucb
+                .path("/api/books/{id}")
+                .buildAndExpand(savedBook.getId())
+                .toUri();
+        return ResponseEntity.created(locationOfNewBook).build();
     }
 }
