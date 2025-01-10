@@ -4,6 +4,7 @@ import dev.akbayin.bookshelfapi.dto.BookDto;
 import dev.akbayin.bookshelfapi.exception.BookVersionMismatchException;
 import dev.akbayin.bookshelfapi.exception.DuplicateBookException;
 import dev.akbayin.bookshelfapi.exception.InvalidBookArgumentException;
+import dev.akbayin.bookshelfapi.mapper.BookMapper;
 import dev.akbayin.bookshelfapi.model.Book;
 import dev.akbayin.bookshelfapi.repository.BookRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,18 +17,14 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper = BookMapper.INSTANCE;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
     public Book createBook(BookDto bookDto) {
-        Book newBook = new Book();
-        newBook.setTitle(bookDto.getTitle());
-        newBook.setStatus(bookDto.getStatus());
-        newBook.setPublishingYear(bookDto.getPublishingYear());
-        newBook.setAuthors(bookDto.getAuthors());
-        newBook.setPublisher(bookDto.getPublisher());
+        Book newBook = bookMapper.toModel(bookDto);
 
         try {
             return bookRepository.save(newBook);

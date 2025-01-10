@@ -16,7 +16,7 @@ public class BookDto {
     private final String title;
 
     @NotEmpty
-    private final Set<Long> authorIds;
+    private final Set<AuthorDto> authors;
 
     @NotNull
     private final Long publisherId;
@@ -27,9 +27,9 @@ public class BookDto {
     @NotNull
     private final Status status;
 
-    public BookDto(String title, Set<Long> authorIds, Long publisherId, int publishingYear, Status status) {
+    public BookDto(String title, Set<AuthorDto> authors, Long publisherId, int publishingYear, Status status) {
         this.title = title;
-        this.authorIds = authorIds;
+        this.authors = authors;
         this.publisherId = publisherId;
         this.publishingYear = publishingYear;
         this.status = status != null ? status : Status.NOT_READ; // Ensure default
