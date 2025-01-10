@@ -1,22 +1,37 @@
 package dev.akbayin.bookshelfapi.dto;
 
-import dev.akbayin.bookshelfapi.model.Author;
-import dev.akbayin.bookshelfapi.model.Publisher;
 import dev.akbayin.bookshelfapi.model.Status;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Set;
 
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Getter
-@Setter
 public class BookDto {
 
-    private String title;
-    private Set<Author> authors;
-    private Publisher publisher;
-    private int publishingYear;
-    private Status status = Status.NOT_READ;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private final String title;
+
+    @NotEmpty
+    private final Set<Long> authorIds;
+
+    @NotNull
+    private final Long publisherId;
+
+    @Positive
+    private final int publishingYear;
+
+    @NotNull
+    private final Status status;
+
+    public BookDto(String title, Set<Long> authorIds, Long publisherId, int publishingYear, Status status) {
+        this.title = title;
+        this.authorIds = authorIds;
+        this.publisherId = publisherId;
+        this.publishingYear = publishingYear;
+        this.status = status != null ? status : Status.NOT_READ; // Ensure default
+    }
 }
