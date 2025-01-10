@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 @Getter
 public class AuthorDto {
-  private final Long id;
+  private Long id;
 
   @NotNull
   @Size(min = 1, max = 255)
@@ -17,6 +17,10 @@ public class AuthorDto {
   @Size(min = 1, max = 255)
   private final String lastName;
 
+  public AuthorDto(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   public AuthorDto(Long id, String firstName, String lastName) {
     this.id = id;

@@ -1,6 +1,8 @@
 package dev.akbayin.bookshelfapi.service;
 
+import dev.akbayin.bookshelfapi.dto.AuthorDto;
 import dev.akbayin.bookshelfapi.dto.BookDto;
+import dev.akbayin.bookshelfapi.dto.PublisherDto;
 import dev.akbayin.bookshelfapi.exception.DuplicateBookException;
 import dev.akbayin.bookshelfapi.model.Author;
 import dev.akbayin.bookshelfapi.model.Book;
@@ -36,12 +38,18 @@ public class BookServiceTest {
 
     @BeforeEach
     public void setUp() {
-        bookDto = new BookDto();
-        bookDto.setTitle("Spring Security in Action");
-        bookDto.setPublishingYear(2024);
-        bookDto.setStatus(Status.NOT_READ);
-        bookDto.setPublisher(new Publisher("Manning"));
-        bookDto.setAuthors(Set.of(new Author("Laurentiu", "Spilca")));
+        String title = "Spring Security in Action";
+        Set<AuthorDto> authors = Set.of(new AuthorDto("Laurentiu", "Spilca"));
+        PublisherDto publisher = new PublisherDto("Manning");
+        int publishingYear = 2024;
+        Status status = Status.NOT_READ;
+        bookDto = new BookDto(
+          title,
+          authors,
+          publisher,
+          publishingYear,
+          status
+        );
 
         book = new Book();
         book.setTitle("Spring Security in Action");
