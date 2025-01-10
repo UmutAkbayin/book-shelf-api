@@ -1,7 +1,7 @@
 package dev.akbayin.bookshelfapi.mapper;
 
-import dev.akbayin.bookshelfapi.dto.PublisherDto;
-import dev.akbayin.bookshelfapi.model.Publisher;
+import dev.akbayin.bookshelfapi.dto.AuthorDto;
+import dev.akbayin.bookshelfapi.model.Author;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface AuthorMapper {
   AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
 
-  Publisher toModel(PublisherDto publisherDto);
+  Author toModel(AuthorDto authorDto);
 
-  Publisher toDto(Publisher publisher);
+  AuthorDto toDto(Author author);
 }
