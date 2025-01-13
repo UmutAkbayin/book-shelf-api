@@ -1,6 +1,7 @@
 package dev.akbayin.bookshelfapi.dto;
 
 import dev.akbayin.bookshelfapi.model.Status;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,11 @@ public class BookDto {
     @Size(min = 1, max = 255)
     private final String title;
 
+    @Valid
     @NotEmpty
     private final Set<AuthorDto> authors;
 
+    @Valid
     @NotNull
     private final PublisherDto publisher;
 
